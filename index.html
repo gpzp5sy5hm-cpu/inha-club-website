@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>인하대학교- 교내 동아리 & 과소모임 통합 플랫폼</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f4f7f6; font-family: 'Pretendard', sans-serif; }
+    
+    /* 상단 네비게이션바 */
+    .navbar-custom { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    
+    /* 히어로 섹션 */
+    .hero-section { background: linear-gradient(135deg, #4e54c8, #8f94fb); color: white; padding: 50px 0 40px 0; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; }
+    
+    /* 카드 디자인 & 호버 */
+    .club-card { transition: all 0.3s ease; border-radius: 16px; border: none; box-shadow: 0 6px 15px rgba(0,0,0,0.05); background: #ffffff; }
+    .club-card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
+    
+    /* 뱃지 디자인 */
+    .badge-type { font-size: 0.75rem; padding: 5px 10px; border-radius: 6px; font-weight: 600; }
+    .badge-cat { font-size: 0.75rem; padding: 5px 10px; border-radius: 20px; font-weight: 500; }
+    
+    /* 1차 필터 탭 (동아리 vs 과소모임) */
+    .type-filter-btn { border-radius: 12px; font-weight: 700; padding: 10px 24px; }
+  </style>
+</head>
+<body>
+
+  <!-- 상단 네비바 -->
+  <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-primary" href="#">🎓 인하대학교 (Inha-University)</a>
+      <span class="navbar-text text-muted small">동아리 & 학과 소모임 통합 큐레이션</span>
+    </div>
+  </nav>
+
+  <!-- 헤더 영역 -->
+  <header class="hero-section text-center mt-5">
+    <div class="container pt-3">
+      <h1 class="fw-bold display-6">동아리부터 학과 소모임까지 한눈에!</h1>
+      <p class="lead text-light opacity-75 mt-2">나에게 맞는 조직 타입과 관심 카테고리를 선택해 보세요.</p>
+    </div>
+  </header>
+
+  <div class="container my-5">
+    
+    <!-- 1단계 필터: 조직 형태 구분 (동아리 vs 과소모임) -->
+    <div class="text-center mb-4">
+      <h6 class="fw-bold text-muted mb-2">1. 조직 구분 선택</h6>
+      <div class="btn-group gap-2 flex-wrap" role="group">
+        <button class="btn btn-primary type-filter-btn active" onclick="setTypeFilter('all', this)">전체 보기</button>
+        <button class="btn btn-outline-primary type-filter-btn" onclick="setTypeFilter('central', this)">🏛️ 중앙동아리</button>
+        <button class="btn btn-outline-primary type-filter-btn" onclick="setTypeFilter('dept', this)">🏫 학과 소모임</button>
+      </div>
+    </div>
+
+    <!-- 2단계 필터: 분야별 카테고리 (봉사, 코딩, 어학, 친목, 공연) -->
+    <div class="text-center mb-5">
+      <h6 class="fw-bold text-muted mb-2">2. 분야별 카테고리 선택</h6>
+      <div class="d-flex justify-content-center gap-2 flex-wrap">
+        <button class="btn btn-dark rounded-pill px-3 cat-filter-btn active" onclick="setCatFilter('all', this)">전체</button>
+        <button class="btn btn-outline-danger rounded-pill px-3 cat-filter-btn" onclick="setCatFilter('volunteer', this)">❤️ 봉사</button>
+        <button class="btn btn-outline-warning rounded-pill px-3 cat-filter-btn text-dark" onclick="setCatFilter('coding', this)">💻 코딩</button>
+        <button class="btn btn-outline-info rounded-pill px-3 cat-filter-btn text-dark" onclick="setCatFilter('language', this)">🗣️ 어학</button>
+        <button class="btn btn-outline-success rounded-pill px-3 cat-filter-btn" onclick="setCatFilter('social', this)">🤝 친목</button>
+        <button class="btn btn-outline-primary rounded-pill px-3 cat-filter-btn" onclick="setCatFilter('performance', this)">🎸 공연</button>
+      </div>
+    </div>
+
+    <!-- 동아리 / 소모임 카드 목록 -->
+    <div class="row g-4" id="club-list">
+      
+      <!-- 카드 1: [중앙동아리] [봉사] -->
+     <div class="col-md-6 col-lg-4 club-item" data-type="central" data-category="volunteer">
+        <div class="card club-card h-100 p-4">
+          <div class="card-body p-0">
+            <div class="d-flex gap-2 mb-3">
+              <span class="badge bg-dark badge-type">🏛️ 중앙동아리</span>
+              <span class="badge bg-danger bg-opacity-10 text-danger badge-cat">❤️ 봉사</span>
+            </div>
+            <h4 class="card-title fw-bold mb-3">🌱 봉사 동아리 '인하장학회'</h4>
+            <p class="card-text text-muted">어린이를 대상으로 과학 교구 만들기와 교육봉사를 진행하는 교내 중앙 봉사 동아리입니다.</p>
+          </div>
+          <div class="card-footer bg-transparent border-0 p-0 mt-4">
+            <button
+  class="btn btn-light w-100 fw-bold text-danger py-2 rounded-3"
+  onclick="location.href='scholarship.html'">
+  자세히 보기 &rarr;
+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 카드 2: [학과 소모임] [코딩] -->
+     <div class="col-md-6 col-lg-4 club-item" data-type="dept" data-category="coding">
+        <div class="card club-card h-100 p-4">
+          <div class="card-body p-0">
+            <div class="d-flex gap-2 mb-3">
+              <span class="badge bg-secondary badge-type">🏫 과소모임 (산업경영공학과)</span>
+              <span class="badge bg-warning bg-opacity-10 text-warning text-dark badge-cat">💻 코딩</span>
+            </div>
+            <h4 class="card-title fw-bold mb-3">🤖 산업경영공학과 '아이덱스'</h4>
+            <p class="card-text text-muted">컴퓨터실 관리, 정기 회의, 스터디 소모임입니다. </p>
+          </div>
+          <div class="card-footer bg-transparent border-0 p-0 mt-4">
+            <button
+  class="btn btn-light w-100 fw-bold text-warning text-dark py-2 rounded-3"
+  onclick="location.href='idex.html'">
+  자세히 보기 &rarr;
+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 카드 3: [중앙동아리] [어학] -->
+      <div class="col-md-6 col-lg-4 club-item" data-type="central" data-category="language">
+        <div class="card club-card h-100 p-4">
+          <div class="card-body p-0">
+            <div class="d-flex gap-2 mb-3">
+              <span class="badge bg-dark badge-type">🏛️ 중앙동아리</span>
+              <span class="badge bg-info bg-opacity-10 text-info text-dark badge-cat">🗣️ 어학</span>
+            </div>
+            <h4 class="card-title fw-bold mb-3">🌍 회화 동아리 '알파카이'</h4>
+            <p class="card-text text-muted">1963년 외국인 선교사들에 의해 창립된 인하대학교 영어회화 중앙동아리입니다. </p>
+          </div>
+          <div class="card-footer bg-transparent border-0 p-0 mt-4">
+            <button
+  class="btn btn-light w-100 fw-bold text-info text-dark py-2 rounded-3"
+  onclick="location.href='alphachi.html'">
+  자세히 보기 &rarr;
+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 카드 4: [학과 소모임] [친목] -->
+     <div class="col-md-6 col-lg-4 club-item" data-type="dept" data-category="social">
+        <div class="card club-card h-100 p-4">
+          <div class="card-body p-0">
+            <div class="d-flex gap-2 mb-3">
+              <span class="badge bg-secondary badge-type">🏫 과소모임</span>
+              <span class="badge bg-success bg-opacity-10 text-success badge-cat">🤝 친목</span>
+            </div>
+            <h4 class="card-title fw-bold mb-3">☕ 산업경영공학과 소모임 '헤어핀'</h4>
+            <p class="card-text text-muted">배드민턴을 통해 친목을 다지는 소모임입니다.</p>
+          </div>
+          <div class="card-footer bg-transparent border-0 p-0 mt-4">
+            <button
+  class="btn btn-light w-100 fw-bold text-success py-2 rounded-3"
+  onclick="location.href='hairpin.html'">
+  자세히 보기 &rarr;
+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 카드 5: [중앙동아리] [공연] -->
+      <div class="col-md-6 col-lg-4 club-item" data-type="central" data-category="performance">
+        <div class="card club-card h-100 p-4">
+          <div class="card-body p-0">
+            <div class="d-flex gap-2 mb-3">
+              <span class="badge bg-dark badge-type">🏛️ 중앙동아리</span>
+              <span class="badge bg-primary bg-opacity-10 text-primary badge-cat">🎸 공연</span>
+            </div>
+            <h4 class="card-title fw-bold mb-3">🎤 밴드 동아리 '꼬망스'</h4>
+            <p class="card-text text-muted">대학 축제 및 연말 정기 라이브 공연을 개최하는 전통 있는 중앙 밴드 공연 동아리입니다.</p>
+          </div>
+          <div class="card-footer bg-transparent border-0 p-0 mt-4">
+            <button
+  class="btn btn-light w-100 fw-bold text-primary py-2 rounded-3"
+  onclick="location.href='commence.html'">
+  자세히 보기 &rarr;
+</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 다중 필터링 자바스크립트 로직 -->
+  
+<<script>
+  let currentType = 'all';
+  let currentCat = 'all';
+
+  // 조직 구분 선택
+  function setTypeFilter(type, btn) {
+    currentType = type;
+
+    // 조직 구분을 바꾸면 카테고리는 전체로 초기화
+    currentCat = 'all';
+
+    // 조직 구분 버튼 스타일
+    document.querySelectorAll('.type-filter-btn').forEach(button => {
+      button.classList.remove('active', 'btn-primary');
+      button.classList.add('btn-outline-primary');
+    });
+
+    btn.classList.remove('btn-outline-primary');
+    btn.classList.add('btn-primary', 'active');
+
+    // 카테고리 버튼도 전체로 초기화
+    document.querySelectorAll('.cat-filter-btn').forEach(button => {
+      button.classList.remove('active');
+    });
+
+    document.querySelector('.cat-filter-btn').classList.add('active');
+
+    applyFilters();
+  }
+
+  // 카테고리 선택
+  function setCatFilter(cat, btn) {
+    currentCat = cat;
+
+    document.querySelectorAll('.cat-filter-btn').forEach(button => {
+      button.classList.remove('active');
+    });
+
+    btn.classList.add('active');
+
+    applyFilters();
+  }
+
+  // 실제 필터 적용
+  function applyFilters() {
+    const cards = document.querySelectorAll('#club-list > .club-item');
+
+    cards.forEach(card => {
+      const type = card.dataset.type;
+      const category = card.dataset.category;
+
+      const typeMatch =
+        currentType === 'all' || type === currentType;
+
+      const categoryMatch =
+        currentCat === 'all' || category === currentCat;
+
+      // 이전 숨김 상태 제거
+      card.classList.remove('d-none');
+      card.style.removeProperty('display');
+
+      // 선택한 조건에 맞는 카드만 표시
+      if (!(typeMatch && categoryMatch)) {
+        card.classList.add('d-none');
+      }
+    });
+  }
+
+  applyFilters();
+</script>
+
+</body>
+</html>
